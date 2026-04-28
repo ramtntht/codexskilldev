@@ -1,0 +1,22 @@
+# standards-registry.yaml
+# 用途：standard_id → 系统内置规范文件路径的映射
+# standards-loader Level 2 依赖本文件
+
+standards:
+  - id: "mermaid-flowchart"
+    name: "Mermaid 业务流程图规范"
+    file_path: "standards/mermaid-flowchart-standard.md"
+    description: "业务流程 Mermaid flowchart TD 格式规范，适用于 business-process 要素"
+    version: "1.0.0"
+
+  - id: "mermaid-page-flow"
+    name: "Mermaid 页面流转图规范"
+    file_path: "standards/mermaid-page-flow-standard.md"
+    description: "页面跳转关系 Mermaid graph TD 格式规范，适用于 user-interaction 要素"
+    version: "1.0.0"
+
+# ── 说明 ──────────────────────────────────────────────────────
+# 当前阶段，mermaid 规范的核心规则已内嵌于各 Spec 的 ## 约束 → ### 设计约束 章节中。
+# standards-loader 若未找到 file_path 对应文件，element-runner Phase 3 将以 Spec
+# 内置设计约束兜底，不终止执行。
+# 待 standards/*.md 规范文件创建后，standards-loader 将优先加载本地文件。

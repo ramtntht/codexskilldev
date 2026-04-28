@@ -1,0 +1,104 @@
+module_templates:
+  - id: "m-prd-ppo"
+    file: "spec/m-prd-ppo.md"
+    implements: "product-positioning"
+    for_scenario: ["专题需求"]
+    for_type: ["TP", "AP", "AI"]
+    execution_mode: ["build", "modify", "incremental"]
+    status: "active"
+
+  - id: "m-prd-tp-app"
+    file: "spec/m-prd-tp-app.md"
+    implements: "app-architecture"
+    for_scenario: ["专题需求"]
+    for_type: ["TP"]
+    execution_mode: ["build", "modify", "incremental"]
+    status: "active"
+
+  - id: "m-prd-prototype"
+    file: "spec/m-prd-prototype.md"
+    implements: "ui-prototype"
+    for_scenario: ["专题需求"]
+    for_type: ["TP", "AP"]
+    execution_mode: ["build", "modify", "incremental"]
+    status: "active"
+
+  - id: "m-prd-tp-info"
+    file: "spec/m-prd-tp-info.md"
+    implements: "info-architecture"
+    for_scenario: ["专题需求"]
+    for_type: ["TP"]
+    execution_mode: ["build", "modify", "incremental"]
+    status: "active"
+
+  - id: "m-prd-tp-feature"
+    file: "spec/m-prd-tp-feature.md"
+    implements: "feature-spec"
+    for_scenario: ["专题需求"]
+    for_type: ["TP"]
+    execution_mode: ["build", "modify", "incremental"]
+    status: "active"
+
+  - id: "m-prd-tp-permission"
+    file: "spec/m-prd-tp-permission.md"
+    implements: "permission-design"
+    for_scenario: ["专题需求"]
+    for_type: ["TP"]
+    execution_mode: ["build", "modify", "incremental"]
+    status: "active"
+
+  - id: "m-prd-integration"
+    file: "spec/m-prd-integration.md"
+    implements: "integration-design"
+    for_scenario: ["专题需求"]
+    for_type: ["TP", "AP", "AI"]
+    execution_mode: ["build", "modify", "incremental"]
+    status: "active"
+
+  - id: "m-prd-config"
+    file: "spec/m-prd-config.md"
+    implements: "config-design"
+    for_scenario: ["专题需求"]
+    for_type: ["TP", "AP"]
+    execution_mode: ["build", "modify", "incremental"]
+    status: "active"
+
+  - id: "m-prd-tp-scenario"
+    file: "spec/m-prd-tp-scenario.md"
+    implements: "scenario-solution"
+    for_scenario: ["专题需求"]
+    for_type: ["TP"]
+    execution_mode: ["build", "modify", "incremental"]
+    status: "active"
+
+  - id: "m-prd-nfr"
+    file: "spec/m-prd-nfr.md"
+    implements: "nfr"
+    for_scenario: ["专题需求"]
+    for_type: ["TP", "AP", "AI"]
+    execution_mode: ["build", "modify", "incremental"]
+    status: "active"
+
+  - id: "m-prd-story"
+    file: "spec/m-prd-story.md"
+    implements: "story-design"
+    for_scenario: ["专题需求", "优化需求"]
+    for_type: ["TP", "AP", "AI"]
+    execution_mode: ["build", "modify", "incremental"]
+    status: "active"
+
+  - id: "m-prd-ap-info"
+    file: "spec/m-prd-ap-info.md"
+    implements: "info-architecture"
+    for_scenario: ["专题需求"]
+    for_type: ["AP"]
+    execution_mode: ["build"]
+    status: "planned"
+
+  - id: "m-prd-ai-feature"
+    file: "spec/m-prd-ai-feature.md"
+    implements: "feature-spec"
+    for_scenario: ["专题需求"]
+    for_type: ["AI"]
+    execution_mode: ["build"]
+    status: "planned"

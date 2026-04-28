@@ -1,0 +1,61 @@
+# spec-template-registry.yaml
+# 用途：element_id + requirement_type + execution_mode → spec 文件路径的三维映射
+# element-runner Phase 1 依赖本文件进行 Spec 定位
+
+spec_templates:
+
+  # ── 原始需求（所有类型通用）──────────────────────────────────
+  - implements: "original-requirement"
+    for_type: ["TP", "AP", "AI", "IT"]
+    execution_mode: ["build", "modify", "incremental"]
+    spec_file: "spec/m-fe-original-requirement.md"
+    status: "active"
+
+  # ── 业务背景（TP/AP/AI 通用）─────────────────────────────────
+  - implements: "business-background"
+    for_type: ["TP", "AP", "AI"]
+    execution_mode: ["build", "modify", "incremental"]
+    spec_file: "spec/m-fe-business-background.md"
+    status: "active"
+
+  # ── 需求类型定性（所有类型通用）──────────────────────────────
+  - implements: "requirement-type"
+    for_type: ["TP", "AP", "AI", "IT"]
+    execution_mode: ["build", "modify", "incremental"]
+    spec_file: "spec/m-fe-requirement-type.md"
+    status: "active"
+
+  # ── 业务流程（TP 专用）───────────────────────────────────────
+  - implements: "business-process"
+    for_type: ["TP"]
+    execution_mode: ["build", "modify", "incremental"]
+    spec_file: "spec/m-fe-business-process.md"
+    status: "active"
+
+  # ── 业务功能（TP 专用）───────────────────────────────────────
+  - implements: "business-function"
+    for_type: ["TP"]
+    execution_mode: ["build", "modify", "incremental"]
+    spec_file: "spec/m-fe-business-function.md"
+    status: "active"
+
+  # ── 用户交互（TP 专用）───────────────────────────────────────
+  - implements: "user-interaction"
+    for_type: ["TP"]
+    execution_mode: ["build", "modify", "incremental"]
+    spec_file: "spec/m-fe-user-interaction.md"
+    status: "active"
+
+  # ── 非功能要求（所有类型通用）────────────────────────────────
+  - implements: "non-functional-req"
+    for_type: ["TP", "AP", "AI", "IT"]
+    execution_mode: ["build", "modify", "incremental"]
+    spec_file: "spec/m-fe-non-functional-req.md"
+    status: "active"
+
+  # ── 概念术语（所有类型通用）──────────────────────────────────
+  - implements: "glossary"
+    for_type: ["TP", "AP", "AI", "IT"]
+    execution_mode: ["build", "modify", "incremental"]
+    spec_file: "spec/m-fe-glossary.md"
+    status: "active"

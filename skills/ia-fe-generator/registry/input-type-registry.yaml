@@ -1,0 +1,63 @@
+input_types:
+  - id: "USER_DIALOG_INPUT"
+    name: "用户对话输入"
+    detection: |
+      用户本轮输入中包含以下任一特征:
+      - 描述业务场景或需求背景
+      - 提及"创建/生成/整理/构建"等意图词
+      - 不是空的"继续"指令(排除resume场景)
+      - 用户说"无文档"/"没有文档"/"直接对话"(主动拒绝提供文档)
+    provision_guide: "用户直接描述需求内容即可,或提供原始需求文档路径。"
+    description: "FE 新建和增量构建的核心输入源。通过对话式发现收集需求信息,或选择性提供文档加速信息收集。"
+
+  - id: "RAW_REQUIREMENTS_DOC"  # ⚠️ 新增输入类型,支持主动询问和路径指定
+    name: "原始需求文档"
+    detection: |
+      # 检测方式1: 默认目录存在文档
+      workspace/raw_requirements/*.docx 存在
+      OR workspace/raw_requirements/*.pdf 存在
+      OR workspace/raw_requirements/*.html 存在
+      OR workspace/raw_requirements/*.md 存在
+
+      # 检测方式2: 用户直接提供文档路径
+      用户输入包含文件路径且文件存在
+      AND 文件格式为 docx/pdf/html/md
+
+      # 检测方式3: 用户明确表达有文档意图
+      用户说"有文档"/"有需求文档"/"在XXX路径"等关键词
+    provision_guide: |
+      提供原始需求文档的两种方式:
+      1. 上传文档到 workspace/raw_requirements/,系统会自动检测
+      2. 直接告诉我文档路径(如"D:/docs/需求文档.docx")
+
+      若无文档或不想提供,直接描述需求即可。
+    description: "可选输入类型。提供原始需求文档后,系统会尝试从文档中抽取需求名称、提出人等要素信息,但必须经过用户确认后才写入FE。若默认目录无文档,系统会主动询问用户是否愿提供文档路径。"
+    supported_formats: ["docx", "pdf", "html", "md"]
+    extraction_strategy: "rule_based"  # 基于规则抽取(后续可扩展为AI抽取)
+    active_inquiry_enabled: true  # ⚠️ 新增:支持主动询问机制
+
+  - id: "FE_DOC_INPROGRESS"
+    name: "进行中的 FE 文档"
+    detection: |
+      workspace/requirements/{current_version}/FE-*.md 存在
+      AND frontmatter.status == "in_progress"
+    provision_guide: "系统检测到未完成的 FE 文档,可续接上次进度继续执行。"
+    description: "续接恢复场景的关键判据。workflow-engine 会自动导向对应编排文件处理续接。"
+
+  - id: "FE_HISTORICAL"
+    name: "历史已完成 FE"
+    detection: |
+      workspace/requirements/*/FE-*.md 存在(任意历史版本)
+      AND frontmatter.status == "completed"
+    provision_guide: "提供历史 FE 路径,或说明要基于哪个历史版本做增量构建或评审修改。"
+    description: "增量构建和评审修改场景的基线 FE 输入。"
+
+  - id: "REVIEW_COMMENTS"
+    name: "评审意见"
+    detection: |
+      用户当前输入满足以下任一:
+      - 提及章节编号并给出修改描述
+      - 包含关键词 [补充/增加/修改/调整/删除] 与具体内容
+      - 明确说"根据评审意见""按以下意见修改"
+    provision_guide: "直接在对话中描述修改意见。"
+    description: "评审修改场景的必要输入。"

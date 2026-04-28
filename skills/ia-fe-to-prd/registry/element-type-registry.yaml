@@ -1,0 +1,77 @@
+element_types:
+  - id: "product-positioning"
+    name: "定位与目标"
+    chapter_no: 1
+    belongs_to: ["TP", "AP", "AI"]
+    optional: false
+    description: "产品愿景、用户、痛点、范围、目标与成功标准。"
+
+  - id: "app-architecture"
+    name: "应用架构"
+    chapter_no: 2
+    belongs_to: ["TP", "AP"]
+    optional: false
+    description: "应用系统模块、特性分类、特性、子特性与架构图。"
+
+  - id: "ui-prototype"
+    name: "界面原型"
+    chapter_no: 3
+    belongs_to: ["TP", "AP", "AI"]
+    optional: false
+    description: "页面清单、流转图、菜单结构与 HTML 原型。"
+
+  - id: "info-architecture"
+    name: "信息架构"
+    chapter_no: 4
+    belongs_to: ["TP", "AP"]
+    optional: false
+    description: "实体清单、ER 图、实体详情、状态流转、数据样例。"
+
+  - id: "feature-spec"
+    name: "功能特性"
+    chapter_no: 5
+    belongs_to: ["TP", "AP", "AI"]
+    optional: false
+    description: "子特性的详细规格、实体操作、集成点与 BDD 验收标准。"
+
+  - id: "permission-design"
+    name: "权限设计"
+    chapter_no: 6
+    belongs_to: ["TP", "AP"]
+    optional: false
+    description: "角色定义、功能权限矩阵、数据权限与脱敏规则。"
+
+  - id: "integration-design"
+    name: "集成设计"
+    chapter_no: 7
+    belongs_to: ["TP", "AP", "AI"]
+    optional: true
+    description: "集成点、集成方式、接口规格与异常处理。"
+
+  - id: "config-design"
+    name: "配置设计"
+    chapter_no: 8
+    belongs_to: ["TP", "AP"]
+    optional: true
+    description: "用户配置项与 IT 管理配置项。"
+
+  - id: "scenario-solution"
+    name: "场景解决方案"
+    chapter_no: 9
+    belongs_to: ["TP", "AP", "AI"]
+    optional: false
+    description: "端到端场景串联子特性、实体与集成点。"
+
+  - id: "nfr"
+    name: "非功能需求"
+    chapter_no: 10
+    belongs_to: ["TP", "AP", "AI"]
+    optional: false
+    description: "DFX 特性、量化验收标准与埋点设计。"
+
+  - id: "story-design"
+    name: "Story 设计"
+    chapter_no: 11
+    belongs_to: ["TP", "AP", "AI"]
+    optional: false
+    description: "基于功能特性与 NFR 拆分 Story 清单。"

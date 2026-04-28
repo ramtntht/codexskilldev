@@ -1,0 +1,37 @@
+output_folder_base: "workspace/design"
+input_folder_base: "workspace/requirements"
+biz_knowledge_library: "docs/biz_kl"
+
+input_doc_type: "FE"
+output_doc_type: "PRD"
+
+default_filename: "{output_doc_type}-{project_name}-{date}.md"
+date_format: "YYYYMMDD"
+
+engine:
+  workflow_engine: "engine/workflow-engine.md"
+  element_runner: "engine/element-runner.md"
+  standards_loader: "engine/standards-loader.md"
+
+registry:
+  element_types: "registry/element-type-registry.yaml"
+  spec_templates: "registry/spec-template-registry.yaml"
+  workflows: "registry/workflow-registry.yaml"
+  input_types: "registry/input-type-registry.yaml"
+  dependency_graph: "registry/dependency-graph.yaml"
+  standards: "registry/standards-registry.yaml"
+
+standards:
+  builtin_dir: "standards/"
+  extend_index: "workspace/extend-rule/INDEX.md"
+
+# ── 可选Skill依赖（不可用时不阻断主流程，降级策略在Spec中定义）──
+optional_skill_dependencies:
+  - skill_id: "iscit-req2proto"
+    purpose: "生成HTML可交互原型"
+    required_for_elements: ["ui-prototype"]
+    availability_check: "Skill调用前由element-runner Phase 4探测"
+
+context:
+  ongoing_file: "workspace/ongoing.md"
+
