@@ -496,8 +496,6 @@ AcceptanceCriteria = {
 4. **范围外的相邻代码区域**：改动点 in_scope 之外但物理临近的功能区域
 5. **架构边界**：本次明确不涉及的模块、服务、表
 
-**最低密度要求**：每个 ChangePoint 至少对应一条 ForbiddenItem，覆盖其最近的高风险相邻对象。
-
 **Step 4 暂停触发条件**：
 
 - ChangePoint 的 target_state 无法从需求原文中确定（如需求只说"加字段"但未说字段名、类型、必填性）→ 暂停询问
