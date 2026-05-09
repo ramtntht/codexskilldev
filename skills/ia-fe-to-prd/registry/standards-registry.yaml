@@ -1,0 +1,45 @@
+# standards-registry.yaml
+# 职责：内嵌规范和扩展规范的统一索引，只声明"有什么规范"，内容在各 standards/*.md 文件中。
+# 设计约定：
+#   - 只登记实际存在的规范文件（与 standards/ 目录文件保持一致）
+#   - applicable_elements 不在此声明；由 spec/m-*.md 的 body "## 约束 → ### 格式规范" 表格引用
+#   - 规范文件缺失时 standards-loader 应提示警告，不阻断流程
+#   - 扩展规范（来自 workspace/extend-rule/INDEX.md）由 standards-loader 运行时动态追加，不在此列
+
+standards:
+
+  # ─── 当前已落地的内嵌规范 ────────────────────────────────────────────
+  # 其余规范按需创建（standards/ 目录下补充文件后，同步在此追加对应记录）
+
+  - id: "app-arch"
+    name: "应用架构图规范"
+    type: "builtin"
+    file: "standards/app-arch-standard.md"
+    description: "架构图 Mermaid graph TB 语法规范，四层结构（应用系统模块-特性分类-特性-子特性），节点命名规则。"
+
+  - id: "er-diagram"
+    name: "ER 图规范"
+    type: "builtin"
+    file: "standards/er-diagram-standard.md"
+    description: "erDiagram 语法规范，关联关系符号规范，实体命名规则，主外键标注要求。"
+
+  # ─── 待创建的规范（status=planned，文件不存在时暂不加载）──────────────
+  # 以下规范留作扩展，实际创建文件后将 planned 条目移到上方 builtin 区
+
+  # - id: "entity-detail"
+  #   name: "实体详情规范"
+  #   type: "builtin"
+  #   file: "standards/entity-detail-standard.md"
+  #   status: "planned"
+
+  # - id: "feature-spec"
+  #   name: "功能特性规范"
+  #   type: "builtin"
+  #   file: "standards/feature-spec-standard.md"
+  #   status: "planned"
+
+  # - id: "permission"
+  #   name: "权限设计规范"
+  #   type: "builtin"
+  #   file: "standards/permission-standard.md"
+  #   status: "planned"
