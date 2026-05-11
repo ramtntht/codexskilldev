@@ -1,0 +1,56 @@
+input_types:
+  - id: "USER_DIALOG_INPUT"
+    name: "用户对话输入"
+    description: "FE 新建和增量构建的核心输入源。通过对话式发现收集需求信息。"
+    detect_rules:
+      - type: "dialog_input"
+        path: ""
+        condition: "always_true"
+    provision_guide: "用户直接描述需求内容即可,或提供原始需求文档路径。"
+
+  - id: "RAW_REQUIREMENTS_DOC"
+    name: "原始需求文档"
+    description: "可选输入。提供后系统抽取要素信息,经用户确认后写入FE。"
+    detect_rules:
+      - type: "dir_not_empty"
+        path: "workspace/raw_requirements"
+        condition: "filter_extensions=docx,pdf,html,md"
+      - type: "user_specified_path"
+        path: "user_message"
+        condition: "exists_and_extension_in=docx,pdf,html,md"
+    provision_guide: |
+      提供原始需求文档的两种方式:
+      1. 上传文档到 workspace/raw_requirements/,系统会自动检测
+      2. 直接告诉我文档路径(如"D:/docs/需求文档.docx")
+      若无文档或不想提供,直接描述需求即可。
+    supported_formats: ["docx", "pdf", "html", "md"]
+
+  - id: "FE_DOC_INPROGRESS"
+    name: "进行中的 FE 文档"
+    description: "续接恢复场景的关键判据。"
+    detect_rules:
+      - type: "frontmatter_field"
+        path: "workspace/requirements/{current_version}/FE-*.md"
+        condition: "status == 'in_progress'"
+    provision_guide: "系统检测到未完成的 FE 文档,可续接上次进度继续执行。"
+
+  - id: "FE_HISTORICAL"
+    name: "历史已完成 FE"
+    description: "增量构建和评审修改场景的基线 FE 输入。"
+    detect_rules:
+      - type: "frontmatter_field"
+        path: "workspace/requirements/*/FE-*.md"
+        condition: "status == 'completed' AND project_name == ongoing.project_name"
+    provision_guide: "提供历史 FE 路径,或说明要基于哪个历史版本做增量构建或评审修改。"
+
+  - id: "REVIEW_COMMENTS"
+    name: "评审意见"
+    description: "评审修改场景的必要输入。"
+    detect_rules:
+      - type: "dialog_input"
+        path: "user_message"
+        condition: "matches_keywords=[补充,增加,修改,调整,删除,根据评审意见,按以下意见修改] OR matches_chapter_pattern"
+      - type: "annotation_marker"
+        path: "user_provided_doc"
+        condition: "contains_pattern==文本==[^n]"
+    provision_guide: "直接在对话中描述修改意见,或提供带 ==高亮==[^n] 标注的评审文档。"

@@ -1,0 +1,96 @@
+workflows:
+  # 场景1: 评审修改(最高优先级)
+  - id: "fe-review-modify"
+    name: "FE 评审修改"
+    priority: 80
+    input_signature:
+      required:
+        - id: "FE_HISTORICAL"
+          reason: "必须有目标 FE 文档(已完成状态)。"
+        - id: "REVIEW_COMMENTS"
+          reason: "必须有评审意见。"
+      excluded:
+        - id: "FE_DOC_INPROGRESS"
+          reason: "存在进行中 FE 时优先走续接恢复。"
+      optional: []
+    trigger_keywords: ["评审修改", "根据评审意见", "修改FE", "按意见改"]
+    orchestration_file: "orchestration/o-review-modify.md"
+    element_sequence: []
+    status: "planned"  # 骨架版本,待实现
+
+  # 场景2: 优化需求增量构建
+  - id: "tp-incremental-build"
+    name: "TP 优化需求 FE 构建"
+    priority: 60
+    input_signature:
+      required:
+        - id: "USER_DIALOG_INPUT"
+          reason: "用户描述优化需求内容。"
+        - id: "FE_HISTORICAL"
+          reason: "必须有历史 FE 作为增量基线。"
+      excluded:
+        - id: "FE_DOC_INPROGRESS"
+          reason: "存在进行中 FE 时优先走续接恢复。"
+        - id: "REVIEW_COMMENTS"
+          reason: "存在评审意见时属于 review-modify 场景。"
+      optional:
+        - id: "RAW_REQUIREMENTS_DOC"
+          reason: "可选:用户可提供优化需求的详细文档。"
+    trigger_keywords: ["优化需求", "1-n", "在现有FE基础上"]
+    orchestration_file: "orchestration/o-tp-incremental.md"
+    element_sequence: []
+    status: "active"
+
+  # 场景3: 专题需求新建构建
+  - id: "tp-new-build"
+    name: "TP 专题需求 FE 构建"
+    priority: 40
+    input_signature:
+      required:
+        - id: "USER_DIALOG_INPUT"
+          reason: "用户描述专题需求内容(必需)。"
+      excluded:
+        - id: "FE_HISTORICAL"
+          reason: "存在历史 FE 时优先走增量构建。"
+        - id: "FE_DOC_INPROGRESS"
+          reason: "存在进行中 FE 时自动续接恢复(由 workflow-engine 处理)。"
+        - id: "REVIEW_COMMENTS"
+          reason: "存在评审意见时属于 review-modify 场景。"
+      optional:
+        - id: "RAW_REQUIREMENTS_DOC"
+          reason: "可选:用户可提供原始需求文档(Word/PDF/HTML),系统会智能抽取要素信息。"
+    trigger_keywords: ["创建FE", "生成FE", "特性需求文档", "创建特性需求", "新建FE"]
+    orchestration_file: "orchestration/o-tp-new-build.md"
+    element_sequence:
+      - element_id: "original-requirement"
+        optional: false
+      - element_id: "business-background"
+        optional: false
+      - element_id: "requirement-type"
+        optional: false
+      - element_id: "business-process"
+        optional: false
+      - element_id: "business-function"
+        optional: false
+      - element_id: "user-interaction"
+        optional: false
+      - element_id: "non-functional-req"
+        optional: false
+      - element_id: "glossary"
+        optional: false
+    status: "active"
+
+  # 场景4-5: AP/AI专题需求(待实现)
+  - id: "ap-new-build"
+    name: "AP 专题需求 FE 构建"
+    priority: 40
+    requirement_type: "AP"
+    orchestration_file: "orchestration/o-ap-new-build.md"
+    status: "planned"
+
+  - id: "ai-new-build"
+    name: "AI 专题需求 FE 构建"
+    priority: 40
+    requirement_type: "AI"
+    orchestration_file: "orchestration/o-ai-new-build.md"
+    status: "planned"

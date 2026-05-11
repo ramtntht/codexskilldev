@@ -1,0 +1,80 @@
+# dependency-graph.yaml
+# 用途：定义要素之间的级联影响关系
+# 在 v1.2.0 中作为：
+#   1. modify 模式的影响范围分析依据
+#   2. incremental 模式变化点路由的"安全网"（详见规范 3.5.3 节 Step 4）
+#
+# ⚠️ v1.2.0 变更说明：
+# - 旧版的 incremental_impact_rules（A-F 工程抽象）已删除
+# - 增量变化点的核心路由逻辑迁移到 atomic-change-registry + change-element-mapping
+# - 本文件仅保留 impact_edges，作为级联影响校验
+
+impact_edges:
+  - source: "product-positioning"
+    targets:
+      - element: "app-architecture"
+        impact_type: "direct"
+        reason: "产品目标与范围变更会直接影响模块边界和特性划分。"
+      - element: "nfr"
+        impact_type: "indirect"
+        reason: "成功标准变化可能影响性能、可用性等目标。"
+
+  - source: "app-architecture"
+    targets:
+      - element: "info-architecture"
+        impact_type: "direct"
+        reason: "特性边界变化会影响实体归属。"
+      - element: "feature-spec"
+        impact_type: "direct"
+        reason: "子特性编号体系来源于应用架构。"
+      - element: "permission-design"
+        impact_type: "direct"
+        reason: "权限矩阵基于子特性清单。"
+      - element: "integration-design"
+        impact_type: "direct"
+        reason: "系统依赖表是集成设计的输入。"
+      - element: "scenario-solution"
+        impact_type: "indirect"
+        reason: "子特性分布变化会影响场景串联。"
+
+  - source: "info-architecture"
+    targets:
+      - element: "feature-spec"
+        impact_type: "direct"
+        reason: "实体操作说明依赖实体定义。"
+      - element: "scenario-solution"
+        impact_type: "direct"
+        reason: "场景表中的操作实体来自信息架构。"
+      - element: "integration-design"
+        impact_type: "indirect"
+        reason: "字段调整可能影响接口参数映射。"
+
+  - source: "feature-spec"
+    targets:
+      - element: "permission-design"
+        impact_type: "direct"
+        reason: "权限矩阵需要与子特性同步。"
+      - element: "scenario-solution"
+        impact_type: "direct"
+        reason: "场景串联依赖子特性清单。"
+      - element: "story-design"
+        impact_type: "direct"
+        reason: "Story 直接从功能特性与验收标准拆分。"
+
+  - source: "permission-design"
+    targets:
+      - element: "scenario-solution"
+        impact_type: "indirect"
+        reason: "角色权限变更会影响场景中的执行角色边界。"
+
+  - source: "integration-design"
+    targets:
+      - element: "scenario-solution"
+        impact_type: "indirect"
+        reason: "外部系统调用步骤会影响场景链路。"
+
+  - source: "nfr"
+    targets:
+      - element: "story-design"
+        impact_type: "direct"
+        reason: "非功能特性是 NFR Story 的直接来源。"
